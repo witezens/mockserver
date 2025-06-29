@@ -1,0 +1,13 @@
+
+GET http://localhost:3000/serviceordering/api/v1/GetOrderNotExist
+
+
+###
+POST http://localhost:3000/resourceinventory/api/v1/ObtainReservedNumber
+Content-Type: application/json
+
+{
+    "ICC": "123456789009876"
+}
+
+

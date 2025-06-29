@@ -1,0 +1,47 @@
+# Go build artifacts
+/bin/
+/mock-server
+*.exe
+*.out
+*.test
+
+# Dependency directories (vendor if not using go modules)
+vendor/
+
+# Go workspace and tools
+go.work
+go.sum
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Coverage and test results
+*.cover
+*.cov
+*.prof
+
+# Env files
+.env
+.env.*
+
+# Docker
+*.tar
+docker-compose.override.yml
+
+# Temp files
+tmp/
+*.tmp
+*.bak
+
+# Mock data generated at runtime (if any)
+mock-data/*.generated.*
+
