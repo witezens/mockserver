@@ -94,4 +94,28 @@ mock-api/
 - Define new `MockRule`s in `main.go` for param-based resolution
 
 ---
+🛠️ Recommendations Before Building the Docker Image
+Before running docker build, make sure your Go module files are up to date to prevent errors during the image build (especially in the go mod download step):
 
+
+```bash
+go mod tidy
+go mod verify
+```
+
+This ensures:
+
+- All used packages are listed in go.mod
+
+- The go.sum file contains all required checksums
+
+- The build process won't fail due to missing or outdated module info
+
+🚀 Typical build flow
+``` bash
+go mod tidy && go mod verify
+docker build -t mock-server .
+```
+
+Tip: You can automate these steps in a Makefile or a build.sh script for CI/CD pipelines.
+---
