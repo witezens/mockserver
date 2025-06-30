@@ -1,11 +1,10 @@
 package handler
 
 import (
-	"fmt"
+	"mock-server/mockcache"
 	"mock-server/registry"
 	"mock-server/resolver"
 	"mock-server/utils"
-	"os"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -29,16 +28,25 @@ func RegisterMockHandler(app *fiber.App, r *resolver.MockResolver) {
 		}
 
 		mockFile := r.ResolveFile(service, resource, method, body, utils.ToURLValues(c.Queries()))
-		mockPath := fmt.Sprintf("mock-data/%s/api/v1/%s", service, mockFile)
-
-		content, err := os.ReadFile(mockPath)
-		if err != nil {
-			utils.LogRequest(c, service, resource, mockFile, 404, false)
+		if mockFile == "" {
+			utils.LogRequest(c, service, resource, "", 404, true)
 			return c.Status(404).JSON(fiber.Map{"error": "Mock not found"})
 		}
 
-		utils.LogRequest(c, service, resource, mockFile, 200, true)
-		c.Type("application/json")
-		return c.Send(content)
+		//  ¿In memory?
+		if parsed, ok := mockcache.GlobalCache.Parsed[mockFile]; ok {
+			utils.LogRequest(c, service, resource, mockFile, 200, true)
+			return c.Status(200).JSON(parsed)
+		}
+
+		if raw, ok := mockcache.GlobalCache.Raw[mockFile]; ok {
+			utils.LogRequest(c, service, resource, mockFile, 200, true)
+			c.Type(utils.GetContentType(mockFile))
+			return c.Send(raw)
+		}
+
+		// Nothing
+		utils.LogRequest(c, service, resource, mockFile, 404, true)
+		return c.Status(404).JSON(fiber.Map{"error": "Mock not found"})
 	})
 }

@@ -1,0 +1,12 @@
+[
+  {
+    "serviceId": 1,
+    "serviceName": "WAP100",
+    "status": "active"
+  },
+  {
+    "serviceId": 2,
+    "serviceName": "ROM50",
+    "status": "idle"
+  }
+]

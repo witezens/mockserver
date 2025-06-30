@@ -11,3 +11,15 @@ Content-Type: application/json
 }
 
 
+###
+GET http://localhost:3000/serviceinventory/api/v1/ActiveServices?MSISDN=33001122
+
+
+###
+POST http://localhost:3000/executecollection/api/v1/ExecuteCollection
+Content-Type: application/json
+
+{
+  "collectionId": "abc123"
+}
+
